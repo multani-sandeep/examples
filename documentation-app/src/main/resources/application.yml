@@ -1,0 +1,58 @@
+server:
+  port: 9093
+  
+ 
+# eureka:
+#   instance:
+#     appname: documentation-application
+#   client:
+#     enabled: true
+#     register-with-eureka: true
+#     fetch-registry: true
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+      
+swagger: 
+  config: 
+    refreshrate: 3600000
+  list: 
+    # petstore: "https://petstore.swagger.io/v2/swagger.json"
+    wtr-ecomm-payment-orchestration: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-payment-orchestration/src/develop/payment-orchestration-endpoints/src/main/resources/apigateway/swagger.yaml"
+    wtr-ecomm-customerorder-orchestration: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-customerorder-orchestration/src/develop/customerorder-orchestration-endpoints/src/main/resources/apigateway/swagger.yaml"
+    wtr-ecomm-interstitials: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-interstitials/src/master/src/main/resources/apigateway/swagger.yaml"
+    wtr-ecomm-customerorder-entity: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-customerorder-entity/src/develop/customerorder-entity-endpoints/src/main/resources/apigateway/swagger-regional.yaml"
+    wtr-ecomm-address-entity: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-address-entity/src/develop/address-entity-endpoints/src/main/resources/api/swagger-regional.json"
+    wtr-ecomm-account-entity:  "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-account-entity/src/master/account-entity-endpoints/account-entity-rest-api/src/main/resources/api/swagger-regional.yaml"
+    wtr-ecomm-account-orchestration: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-account-orchestration/src/master/account-orchestration-endpoints/src/main/resources/api/swagger.yaml"
+    wtr-ecomm-order-entity: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-order-entity/src/master/order-entity-endpoints/src/main/resources/apigateway/swagger-regional.yaml"
+    wtr-ecomm-payment-entity: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-payment-entity/src/master/payment-entity-endpoints/src/main/resources/apigateway/swagger-regional.yaml"
+    wtr-ecomm-products: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-products/src/master/src/main/resources/apigateway/swagger.yaml"
+    wtr-ecomm-reference: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-reference/src/master/reference-endpoints/reference-rest-api/src/main/resources/apigateway/swagger.yaml"
+    wtr-ecomm-route-entity: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-route-entity/src/develop/route-entity-endpoints/route-entity-rest-api/src/main/resources/apigateway/swagger-regional.yaml"
+    wtr-ecomm-slot-entity: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-slot-entity/src/develop/slot-entity-endpoints/slot-entity-rest-api/src/main/resources/apigateway/swagger-regional.yaml"
+    wtr-ecomm-address: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-address/src/master/address-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-address-order-entity: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-address-order-entity/src/develop/address-order-entity-endpoints/src/main/resources/api/swagger-regional.json"
+    wtr-ecomm-authentication: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-authentication/src/master/authentication-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-autosuggest: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-autosuggest/src/master/autosuggest-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-branch: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-branch/src/master/branch-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-catalog: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-catalog/src/master/catalog-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-catalog-enrich: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-catalog-enrich/src/master/catalog-enrich-endpoints/src/main/resources/api/swagger.json"
+    wtr-content-api: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-content-api/src/master/endpoints/amazon-lambda/src/main/resources/api/swagger.json"
+    wtr-ecomm-custsearch: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-custsearch/src/master/custsearch-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-customer: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-customer/src/master/customer-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-elba: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-elba/src/master/elba-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-emailer: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-emailer/src/master/emailer-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-favourites: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-favourites/src/master/favourites-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-geolocation: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-geolocation/src/master/geolocation-endpoints/src/main/resources/api/swagger-regional.json"
+    wtr-ecomm-marketing-preferences: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-marketing-preferences/src/develop/marketing-preferences-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-memberships: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-memberships/src/master/memberships-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-order: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-order/src/master/order-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-orderitems: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-orderitems/src/master/orderitems-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-pricing: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-pricing/src/master/pricing-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-product-collections: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-product-collections/src/master/endpoints/aws-lambda/src/main/resources/api/swagger.json"
+    wtr-ecomm-reviews: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-reviews/src/master/reviews-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-search: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-search/src/master/search-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-search-admin: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-search-admin/src/master/search-admin-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-shopping-lists: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-shopping-lists/src/master/shopping-lists-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-slot: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-slot/src/master/slot-endpoints/src/main/resources/api/swagger.json"
+    wtr-ecomm-slot-availability: "https://api.bitbucket.org/2.0/repositories/wtrecom/wtr-ecomm-slot-availability/src/master/slot-availability-endpoints/src/main/resources/api/swagger.json"
