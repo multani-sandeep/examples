@@ -144,7 +144,7 @@ public class ServiceDescriptionUpdater {
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
  
         credentialsProvider.setCredentials(AuthScope.ANY,
-                        new UsernamePasswordCredentials("sandeep.singh@waitrose.co.uk", "Gr3mlin0!"));
+                        new UsernamePasswordCredentials("sandeep.singh@waitrose.co.uk", "Gr3mlin0*"));
  
         HttpClient client = HttpClientBuilder
                                 .create()
