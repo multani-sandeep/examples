@@ -1,6 +1,12 @@
 package com.satish.central.docs.config.swagger;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,6 +54,7 @@ public class ServiceDescriptionUpdater {
 	
 	private static final String DEFAULT_SWAGGER_URL="/v2/api-docs";
 	private static final String KEY_SWAGGER_URL="swagger_url";
+	private static final String SWAGGER_CACHE="./swagger.ser";
 	
 //	@Autowired
 //	private DiscoveryClient discoveryClient;
@@ -80,9 +87,11 @@ public class ServiceDescriptionUpdater {
 	private ServiceDefinitionsContext definitionContext;
 	
 	private Map<String, String> failedSwaggers = null;
+	private Map<String, Object> successfulSwaggers = null;
+	
 	
 	@Scheduled(fixedDelayString= "${swagger.config.refreshrate}")
-	public void refreshSwaggerConfigurations(){
+	public void refreshSwaggerConfigurations() throws ClassNotFoundException, FileNotFoundException, IOException{
 		logger.debug("Starting Service Definition Context refresh");
 		
 //		discoveryClient.getServices().stream().forEach(serviceId -> {
@@ -108,6 +117,12 @@ public class ServiceDescriptionUpdater {
 //		});
 		
 		failedSwaggers = new HashMap<String, String>();
+		try {
+			successfulSwaggers = (HashMap<String,Object>)new ObjectInputStream(new FileInputStream(new File(SWAGGER_CACHE))).readObject();
+		}catch(IOException ioe) {
+			//empty file found create a new hashmap
+			successfulSwaggers = new HashMap<String,Object>();
+		}
 
 		for (Map.Entry<String, String> entry : list.getList().entrySet()) {
  		    logger.info(entry.getKey() + "/" + entry.getValue());
@@ -126,6 +141,7 @@ public class ServiceDescriptionUpdater {
 			logger.info("Service Definition Context Refreshed at :  {}",LocalDate.now());
 
 		}
+		new ObjectOutputStream(new FileOutputStream(new File(SWAGGER_CACHE))).writeObject(successfulSwaggers);
 		logger.info("Failed swaggers: "+ failedSwaggers);
 	}
 	
@@ -159,14 +175,13 @@ public class ServiceDescriptionUpdater {
 	private Optional<Object> getWTRSwaggerDefinitionForAPI(String serviceName, String url){
 		logger.debug("Accessing the SwaggerDefinition JSON for Service : {} : URL : {} ", serviceName, url);
 		try{
-			wtrtemplate.getInterceptors().add(new BasicAuthorizationInterceptor("sandeep.singh@waitrose.co.uk", "Gr3mlin0!"));
-			org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
-			headers.set("Content-Type", "application/json");
-			
-			HttpEntity entity = new HttpEntity(headers);
-			
 			Object jsonData = Collections.EMPTY_MAP;
 			try {
+				wtrtemplate.getInterceptors().add(new BasicAuthorizationInterceptor("sandeep.singh@waitrose.co.uk", "Gr3mlin0!"));
+				org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+				headers.set("Content-Type", "application/json");
+				
+				HttpEntity entity = new HttpEntity(headers);
 //				jsonData = new ObjectMapper().readValue(wtrtemplate.exchange(
 //				    url, HttpMethod.GET, entity, String.class).getBody(), HashMap.class);
 				String response = wtrtemplate.exchange(
@@ -176,12 +191,28 @@ public class ServiceDescriptionUpdater {
 				}else {
 					jsonData = jsonMapper.readValue(response, HashMap.class);
 				}
+				successfulSwaggers.put(serviceName, jsonData);
 			} catch (HttpClientErrorException | JsonParseException | JsonMappingException e) {
-				failedSwaggers.put(serviceName, url);
+				if(successfulSwaggers.containsKey(serviceName)) {
+					jsonData = successfulSwaggers.get(serviceName);
+				}else {
+					failedSwaggers.put(serviceName, url);
+				}
 				e.printStackTrace();
 			}catch (IOException e) {
-				failedSwaggers.put(serviceName, url);
+				if(successfulSwaggers.containsKey(serviceName)) {
+					jsonData = successfulSwaggers.get(serviceName);
+				}else {
+					failedSwaggers.put(serviceName, url);
+				}
 				e.printStackTrace();				
+			}catch(org.springframework.web.client.ResourceAccessException e) {
+				if(successfulSwaggers.containsKey(serviceName)) {
+					jsonData = successfulSwaggers.get(serviceName);
+				}else {
+					failedSwaggers.put(serviceName, url);
+				}
+				e.printStackTrace();
 			}
 			
 			return Optional.of(jsonData);
@@ -191,11 +222,6 @@ public class ServiceDescriptionUpdater {
 			return Optional.empty();
 		}
 	}
-
-//	private String getSwaggerURL( ServiceInstance instance){
-//		String swaggerURL = instance.getMetadata().get(KEY_SWAGGER_URL);
-//		return swaggerURL != null ? instance.getUri()+swaggerURL : instance.getUri()+DEFAULT_SWAGGER_URL;
-//	}
 	
 	private Optional<Object> getSwaggerDefinitionForAPI(String serviceName, String url){
 		logger.debug("Accessing the SwaggerDefinition JSON for Service : {} : URL : {} ", serviceName, url);
